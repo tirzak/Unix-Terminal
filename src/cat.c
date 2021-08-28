@@ -1,3 +1,4 @@
+
 #include <cat.h>
 
 void cat(char *s){

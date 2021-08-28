@@ -1,14 +1,15 @@
 #include <cat.h>
 #include <echo.h>
 
+void parse_args(const char* str, char **args);
+
 int main (int argc, char ** argv){
 char buffer[20];
 char str[20];
 char* ch;
 char c;
 int i;
-
-
+char *argVals[4]={'\0'};
 const char * quit = "quit";
 const char * echoV="echo";
 const char * copy="copy";
@@ -32,16 +33,32 @@ while (fgets(buffer, 20, stdin)!=NULL) {
                 break;
         }
         else if(strstr(str, catV) != NULL) {
-                cat(str);
+                parse_args(str,argVals);
+                cat(argVals[1]);
         }
         else if(strstr(str, echoV) != NULL) {
-                echo(str);
+                parse_args(str,argVals);
+                echo(argVals[1]);
         }
         
 
     
 }
 
+}
+
+void parse_args(const char* str, char **args){
+const char * ans="";
+char *token, *strs, *tofree;
+tofree = strs = strdup(str);
+int i=0;
+while ((token = strsep(&strs, " "))) {
+        
+        args[i]=token;
+        i++;
+}
+
+free(tofree);
 }
 
 
