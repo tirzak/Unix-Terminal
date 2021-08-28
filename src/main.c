@@ -1,7 +1,8 @@
 #include <cat.h>
 #include <echo.h>
+#include <copy.h>
 
-void parse_args(const char* str, char **args);
+char * parse_args(const char* str, char **args);
 
 int main (int argc, char ** argv){
 char buffer[20];
@@ -33,12 +34,21 @@ while (fgets(buffer, 20, stdin)!=NULL) {
                 break;
         }
         else if(strstr(str, catV) != NULL) {
-                parse_args(str,argVals);
-                cat(argVals[1]);
+                 char * f=parse_args(str,argVals);
+                 cat(argVals[1]);
+                 free(f);
         }
         else if(strstr(str, echoV) != NULL) {
-                parse_args(str,argVals);
+                char * f=parse_args(str,argVals);
                 echo(argVals[1]);
+                free(f);
+               
+        }
+        else {
+                char * f=parse_args(str,argVals);
+                cp(argVals[1],argVals[2]); 
+                free(f);
+                
         }
         
 
@@ -47,7 +57,7 @@ while (fgets(buffer, 20, stdin)!=NULL) {
 
 }
 
-void parse_args(const char* str, char **args){
+char * parse_args(const char* str, char **args){
 const char * ans="";
 char *token, *strs, *tofree;
 tofree = strs = strdup(str);
@@ -57,8 +67,7 @@ while ((token = strsep(&strs, " "))) {
         args[i]=token;
         i++;
 }
-
-free(tofree);
+return tofree;
 }
 
 

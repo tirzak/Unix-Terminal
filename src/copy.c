@@ -11,13 +11,13 @@ int cp(const char *src, const char *dest)
 
     fd_src = open(src, O_RDONLY);
     if (fd_src < 0){
-        printf("Error opening file");
+        printf("Error opening file\n");
         return -1;
     }
 
     fd_dest = open(dest, O_WRONLY | O_CREAT | O_EXCL, 0666);
       if (fd_src < 0){
-        printf("Copy Error");
+        printf("Copy Error\n");
         close(fd_src);
         return -1;
     }
@@ -37,7 +37,7 @@ int cp(const char *src, const char *dest)
 
             else if (errno != EINTR){
                 close(fd_src);
-                printf("Error while copying");
+                printf("Error while copying\n");
                 close(fd_dest);
                 return -1;
             }
