@@ -4,5 +4,7 @@ OBJS = $(addsuffix .o, $(basename $(SRCS)))
 CC = gcc
 CFLAGS = -Wall -g -I include
 
-program:
+terminal.out:
 	$(CC) $(CFLAGS) $(SRCS) -o $@
+
+terminal: terminal.out

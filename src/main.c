@@ -106,7 +106,7 @@ void printUsage(){
          printf("Usage:\n"
                 "1. echo string (To echo something)\n"
                 "2. cp src dest (To copy file)\n"
-                "3. cat file\n"
+                "3. cat file (To print contents of file)\n"
                 "4. quit (To exit)\n");
 }
 
