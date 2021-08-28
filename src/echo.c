@@ -1,6 +1,10 @@
 #include <echo.h>
 
-void echo(const char * str){
+int echo(char **args, int argCount){
 
-    printf("%s\n",str);
+    for(int i=1;i<argCount;++i){
+        printf("%s ",args[i]);
+
+    }
+    return 0;
 }
