@@ -6,6 +6,6 @@ A shell/terminal that supports the following functions
 2. Echo
 3. Copy a file
 
-# Usage
+## Usage
 1. Enter ` make terminal ` in your terminal
 2. ./terminal.out
