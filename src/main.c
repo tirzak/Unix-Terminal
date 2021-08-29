@@ -4,10 +4,17 @@
 #include <limits.h>
 #include <colors.h>
 #include <ls.h>
+#include <cd.h>
 
 int argCount=0;
+
 char * parse_args(const char* str, char **args);
 void printUsage();
+void printCurrentDir();
+
+
+
+
 int main (int argc, char ** argv){
 char buffer[20];
 char str[20];
@@ -20,20 +27,12 @@ const char * echoV="echo";
 const char * copy="cp";
 const char * catV="cat";
 const char * lsV="ls";
+const char * cdV="cd";
 
 printUsage();
+printCurrentDir();
 
-
- char cwd[PATH_MAX];
-
-if (getcwd(cwd, sizeof(cwd)) == NULL) {
-
-        perror("getcwd() error");
-        return 1;
-
-
-} 
-printf("%sterminal: %s%s%s> ",BGRN,BBLU,cwd,WHT);   
+ 
 while (fgets(buffer, 20, stdin)!=NULL) {
         
         strcpy(str,buffer);
@@ -92,10 +91,21 @@ while (fgets(buffer, 20, stdin)!=NULL) {
                 free(f);
 
         }
+        else if(strstr(str, cdV) != NULL){
+                char * f=parse_args(str,argVals);
+                if(argCount==2){
+                cd(argVals[1]); 
+                }
+                else{
+                        printf("cd expects only one argument\n");
+                }
+                free(f);
+
+        }
         else{
                printUsage();
         }
-        printf("\n%sterminal: %s%s%s> ",BGRN,BBLU,cwd,WHT);   
+        printCurrentDir();
         
 
     
@@ -122,7 +132,22 @@ void printUsage(){
                 "1. echo string (To echo something)\n"
                 "2. cp src dest (To copy file)\n"
                 "3. cat file (To print contents of file)\n"
-                "4. quit (To exit)\n");
+                "4. ls path (To list files and dirs in a path)\n"
+                "5. cd path (To change current working dir)\n"
+                "6. quit (To exit)");
 }
 
 
+void printCurrentDir(){
+char cwd[PATH_MAX];
+
+if (getcwd(cwd, sizeof(cwd)) == NULL) {
+
+        perror("getcwd() error");
+        
+
+
+} 
+printf("\n%sterminal: %s%s%s> ",BGRN,BBLU,cwd,WHT);   
+
+}
