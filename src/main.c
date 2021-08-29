@@ -5,6 +5,8 @@
 #include <colors.h>
 #include <ls.h>
 #include <cd.h>
+#include <rm.h>
+
 
 int argCount=0;
 
@@ -28,6 +30,7 @@ const char * copy="cp";
 const char * catV="cat";
 const char * lsV="ls";
 const char * cdV="cd";
+const char * rmV="rm";
 
 printUsage();
 printCurrentDir();
@@ -83,7 +86,7 @@ while (fgets(buffer, 20, stdin)!=NULL) {
         else if(strstr(str, lsV) != NULL){
                 char * f=parse_args(str,argVals);
                 if(argCount==2){
-                ls(argVals[1]); 
+                ls(argVals[1],1); 
                 }
                 else{
                         printf("ls expects only one argument\n");
@@ -98,6 +101,17 @@ while (fgets(buffer, 20, stdin)!=NULL) {
                 }
                 else{
                         printf("cd expects only one argument\n");
+                }
+                free(f);
+
+        }
+        else if(strstr(str, rmV) != NULL){
+                char * f=parse_args(str,argVals);
+                if(argCount==2){
+                rm(argVals[1]); 
+                }
+                else{
+                        printf("rm expects only one argument\n");
                 }
                 free(f);
 

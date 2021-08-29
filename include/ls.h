@@ -4,5 +4,5 @@
 #include <stdio.h> 
 #include <string.h>
 
-void ls(const char * dirName);
+int ls(const char * dirName, int printVal);
 #endif
