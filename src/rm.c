@@ -28,7 +28,9 @@ void rm(const char * path)
             return;
             
         }
-        else if (strcmp(answer,'y')==0){
+        else{
+         answer[strcspn(answer, "\n")] = 0;
+         if (strcmp(answer,"y")==0){
             if (nftw(path, rmStatic ,10, FTW_DEPTH|FTW_MOUNT|FTW_PHYS) < 0)
             {
                 perror("Error");
@@ -40,6 +42,7 @@ void rm(const char * path)
             return;
         }
         
+    }
     }
     else{
     if (nftw(path, rmStatic ,10, FTW_DEPTH|FTW_MOUNT|FTW_PHYS) < 0)

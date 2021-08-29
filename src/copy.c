@@ -15,7 +15,7 @@ int cp(const char *src, const char *dest)
         return -1;
     }
 
-    fd_dest = open(dest, O_WRONLY | O_CREAT | O_EXCL, 0666);
+    fd_dest = open(dest, O_WRONLY | O_CREAT , 0666);
       if (fd_src < 0){
         printf("Copy Error\n");
         close(fd_src);

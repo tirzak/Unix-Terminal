@@ -18,8 +18,8 @@ void printCurrentDir();
 
 
 int main (int argc, char ** argv){
-char buffer[20];
-char str[20];
+char buffer[256];
+char str[256];
 char* ch;
 char c;
 
@@ -36,7 +36,7 @@ printUsage();
 printCurrentDir();
 
  
-while (fgets(buffer, 20, stdin)!=NULL) {
+while (fgets(buffer, 256, stdin)!=NULL) {
         
         strcpy(str,buffer);
         
@@ -50,11 +50,12 @@ while (fgets(buffer, 20, stdin)!=NULL) {
             while ((c = getchar()) != '\n' && c != EOF)
                 continue;
         }
-        if(strcmp(str,quit)==0){
+        char * q=parse_args(str,argVals);
+        if(strcmp(argVals[0],quit)==0){
                 break;
         }
-        else if(strstr(str, catV) != NULL) {
-                 char * f=parse_args(str,argVals);
+        else if(strcmp(argVals[0], catV)==0) {
+                 
                 if(argCount==2){
                         cat(argVals[1]);
                 }
@@ -62,58 +63,57 @@ while (fgets(buffer, 20, stdin)!=NULL) {
                         printf("cat expects only one argument\n");
                 }
                  
-                 free(f);
+                 
         }
-        else if(strstr(str, echoV) != NULL) {
-                char * f=parse_args(str,argVals);
+        else if(strcmp(argVals[0], echoV)==0) {
+                
                
                 echo(argVals,argCount);
                
-                free(f);
+                
                
         }
-        else if(strstr(str, copy) != NULL){
-                char * f=parse_args(str,argVals);
+        else if(strcmp(argVals[0], copy)==0){
+                
                 if(argCount==3){
                 cp(argVals[1],argVals[2]); 
                 }
                 else{
                         printf("To copy, please enter only two arguments\n");
                 }
-                free(f);
+                
                 
         }
-        else if(strstr(str, lsV) != NULL){
-                char * f=parse_args(str,argVals);
+        else if(strcmp(argVals[0], lsV)==0){
+                
                 if(argCount==2){
                 ls(argVals[1],1); 
                 }
                 else{
                         printf("ls expects only one argument\n");
                 }
-                free(f);
-
+              
         }
-        else if(strstr(str, cdV) != NULL){
-                char * f=parse_args(str,argVals);
+        else if(strcmp(argVals[0], cdV)==0){
+                
                 if(argCount==2){
                 cd(argVals[1]); 
                 }
                 else{
                         printf("cd expects only one argument\n");
                 }
-                free(f);
+             
 
         }
-        else if(strstr(str, rmV) != NULL){
-                char * f=parse_args(str,argVals);
+        else if(strcmp(argVals[0], rmV)==0){
+                
                 if(argCount==2){
                 rm(argVals[1]); 
                 }
                 else{
                         printf("rm expects only one argument\n");
                 }
-                free(f);
+             
 
         }
         else{
@@ -121,9 +121,11 @@ while (fgets(buffer, 20, stdin)!=NULL) {
         }
         printCurrentDir();
         
-
+        
+        free(q);
     
 }
+
 return 0;
 
 }
