@@ -2,6 +2,9 @@
 #include <echo.h>
 #include <copy.h>
 #include <limits.h>
+#include <colors.h>
+#include <ls.h>
+
 int argCount=0;
 char * parse_args(const char* str, char **args);
 void printUsage();
@@ -16,6 +19,7 @@ const char * quit = "quit";
 const char * echoV="echo";
 const char * copy="cp";
 const char * catV="cat";
+const char * lsV="ls";
 
 printUsage();
 
@@ -29,7 +33,7 @@ if (getcwd(cwd, sizeof(cwd)) == NULL) {
 
 
 } 
-printf("terminal: %s>",cwd);   
+printf("%sterminal: %s%s%s> ",BGRN,BBLU,cwd,WHT);   
 while (fgets(buffer, 20, stdin)!=NULL) {
         
         strcpy(str,buffer);
@@ -53,7 +57,7 @@ while (fgets(buffer, 20, stdin)!=NULL) {
                         cat(argVals[1]);
                 }
                 else{
-                        printf("Cat expects only one argument\n");
+                        printf("cat expects only one argument\n");
                 }
                  
                  free(f);
@@ -77,10 +81,21 @@ while (fgets(buffer, 20, stdin)!=NULL) {
                 free(f);
                 
         }
+        else if(strstr(str, lsV) != NULL){
+                char * f=parse_args(str,argVals);
+                if(argCount==2){
+                ls(argVals[1]); 
+                }
+                else{
+                        printf("ls expects only one argument\n");
+                }
+                free(f);
+
+        }
         else{
                printUsage();
         }
-        printf("\nterminal: %s>",cwd);   
+        printf("\n%sterminal: %s%s%s> ",BGRN,BBLU,cwd,WHT);   
         
 
     
